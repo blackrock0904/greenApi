@@ -1,0 +1,27 @@
+.container {
+    position: relative;
+}
+
+.button {
+    padding: 10px;
+    border: none;
+    margin-left: 20px;
+    cursor: pointer;
+    background: grey;
+    color: white;
+    border-radius: 3px;
+}
+
+.input {
+    padding: 10px;
+}
+
+.input:focus,
+.input:focus-visible {
+    outline: grey auto 1px;
+}
+
+.error {
+    margin-top: 10px    ;
+    color: red;
+}

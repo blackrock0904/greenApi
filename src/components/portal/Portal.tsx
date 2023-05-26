@@ -3,7 +3,7 @@ import styles from './Portal.module.css';
 
 interface Props {
     children?: React.ReactNode
-}
+};
 
 const Portal: FC<Props> = ({children}): JSX.Element => {
     return (

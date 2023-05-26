@@ -1,0 +1,9 @@
+.logout {
+    display: block;
+    color: white;
+    background: lightcoral;
+    border: unset;
+    border-radius: 3px;
+    padding: 10px;
+    cursor: pointer;
+}

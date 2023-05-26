@@ -1,13 +1,32 @@
 import React from "react";
-import Counter from "./components/Counter";
 import Portal from "./components/portal/Portal";
+import Credentials from "./components/credentials/Credentials";
+import greenStore from "./store/greenStore";
+import {observer} from "mobx-react-lite";
+import Logout from "./components/logout/Logout";
+import Chat from "./components/chat/Chat";
+import styles from "./App.module.css";
+import Phone from "./components/phone/Phone";
 
 function App() {
+    const {isEligible} = greenStore;
+
   return (
       <Portal>
-          <h1>Hello world</h1>
+          {!isEligible && <Credentials/>}
+          {isEligible && (
+              <>
+                  <div className={styles.phoneBox}>
+                      <Phone/>
+                  </div>
+                  <div className={styles.logoutBox}>
+                      <Logout/>
+                  </div>
+                  <Chat/>
+              </>
+          )}
       </Portal>
   );
 }
 
-export default App;
+export default observer(App);

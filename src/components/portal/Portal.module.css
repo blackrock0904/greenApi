@@ -5,4 +5,7 @@
   top: 0;
   bottom: 0;
   background-image: url("../../../public/img/bg.jpeg");
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

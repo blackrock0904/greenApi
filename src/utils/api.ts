@@ -1,24 +1,38 @@
-import axios, {AxiosResponse} from "axios";
+import axios, {AxiosError, AxiosResponse} from "axios";
 
 export interface ISendData {
     chatId: string,
     message: string
 }
 
+export interface ICheckWhatsappData {
+    phoneNumber: number
+}
+
 export type GetSettingsData = Partial<typeof info>;
 export type SendMessageData = Partial<typeof sendMessage>;
 export type ReceiveNotificationData = Partial<typeof notification>;
+export type ExistWhatsApp = {
+    existsWhatsapp: boolean
+};
 
 export class Api {
-    static getSettings = (id: string, token: string): Promise<AxiosResponse<GetSettingsData>> => {
+    static getSettings = (id: string, token: string): Promise<AxiosResponse<GetSettingsData> | AxiosError> => {
         return axios.get(`https://api.green-api.com/waInstance${id}/getSettings/${token}/`);
     }
 
-    static sendMessage = (id: string, token: string, data: ISendData): Promise<AxiosResponse<SendMessageData>> => {
+    static checkWhatsapp = (id: string, token: string, phone: number): Promise<AxiosResponse<ExistWhatsApp> | AxiosError> => {
+        const data: ICheckWhatsappData = {
+            phoneNumber: phone
+        };
+        return axios.post(`https://api.green-api.com/waInstance${id}/checkWhatsapp/${token}`, data);
+    }
+
+    static sendMessage = (id: string, token: string, data: ISendData): Promise<AxiosResponse<SendMessageData> | AxiosError> => {
         return axios.post(`https://api.green-api.com/waInstance${id}/sendMessage/${token}/`, data)
     }
 
-    static receiveNotification = (id: string, token: string): Promise<AxiosResponse<ReceiveNotificationData>> => {
+    static receiveNotification = (id: string, token: string): Promise<AxiosResponse<ReceiveNotificationData> | AxiosError> => {
         return axios.get(`https://api.green-api.com/waInstance${id}/receiveNotification/${token}/`)
     }
 
