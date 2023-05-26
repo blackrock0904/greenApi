@@ -1,11 +1,12 @@
-import React, {ChangeEvent, useEffect, useState} from "react";
+import React, {ChangeEvent, FC, useEffect, useState} from "react";
 import styles from "./SendMessage.module.css";
-import {Api, ISendData} from "../../utils/api";
+import {Api, ISendData, ISendMessage} from "../../utils/api";
 import greenStore, {IMessage} from "../../store/greenStore";
 import {AxiosResponse} from "axios";
 import {reaction} from "mobx";
 
-const SendMessage = () => {
+
+const SendMessage: FC = () => {
     const [message, setMessage] = useState<string>("");
     const [error, setError] = useState<string>("");
     const onChange = (e: ChangeEvent<HTMLInputElement>): void => {
@@ -29,13 +30,11 @@ const SendMessage = () => {
         setError("");
 
         try {
-            const response = await Api.sendMessage(greenStore.greenId, greenStore.greenToken, data) as AxiosResponse<{ idMessage: string}>
+            const response = await Api.sendMessage(greenStore.greenId, greenStore.greenToken, data) as AxiosResponse<ISendMessage>
             const newMessage: IMessage = {
                id: response.data.idMessage,
-               data: {
-                   incoming: false,
-                   text: message
-               }
+                incoming: false,
+                text: message
             };
             greenStore.addMessage(newMessage);
             setMessage("");

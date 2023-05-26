@@ -5,7 +5,7 @@ import greenStore from "../../store/greenStore";
 import SendMessage from "../sendMessage/SendMessage";
 import Messages from "../messages/Messages";
 
-const Chat: FC<{}> = () => {
+const Chat: FC = () => {
     const {phone} = greenStore;
 
     return (

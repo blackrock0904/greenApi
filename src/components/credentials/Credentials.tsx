@@ -1,39 +1,33 @@
-import React, {FormEvent, useState} from "react";
+import React, {FC, FormEvent, useState} from "react";
 import greenStore from "../../store/greenStore";
 import styles from "./Credentials.module.css";
 import {Api, GetSettingsData} from "../../utils/api";
+import {AxiosResponse} from "axios";
 
-const ID = "1101825047";
-const TOKEN = "6ed1143490a845cd9915079ae71a80c855fe1d440ae94ae2be";
+const Credentials: FC = () => {
+    const [error, setError] = useState<string>("");
+    const [id, setId] = useState<string>("");
+    const [token, setToken] = useState<string>("");
 
-const Credentials = () => {
-    const [networkError, setNetworkError] = useState<string>("");
-
-    const submitHandle = async (e: FormEvent<HTMLFormElement>) => {
+    const submitHandle = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
-        const idInstance = (e.currentTarget.children[0] as HTMLInputElement).value;
-        const apiTokenInstance =  (e.currentTarget.children[1] as HTMLInputElement).value;
-        if (!idInstance || !apiTokenInstance) return;
-
-        try {
-            const response = await Api.getSettings(ID, TOKEN) as GetSettingsData;
-            if (response.data?.incomingWebhook !== "yes") {
-                setNetworkError("Switch on receiving message...")
+        if (id && token) {
+            try {
+                const response = await Api.getSettings(id, token) as AxiosResponse<GetSettingsData>;
+                if (response.data.incomingWebhook === "no") {
+                    await Api.setSettings(id, token, {"incomingWebhook": "yes"});
+                }
+                greenStore.greenId = id;
+                greenStore.greenToken = token;
+                greenStore.setEligible(true);
+            } catch {
+                setError("Try it one more time...")
             }
-            greenStore.greenId = ID;
-            greenStore.greenToken = TOKEN;
-            greenStore.setEligible(true);
-
-        } catch {
-            setNetworkError("Bad params. Try it one more time...")
         }
-    }
+    };
 
     return (
-        <form
-            onSubmit={submitHandle}
-            className={styles.container}
-        >
+        <form onSubmit={submitHandle} className={styles.container}>
             <input
                 type="text"
                 autoComplete="off"
@@ -41,6 +35,8 @@ const Credentials = () => {
                 name="idInstance"
                 className={styles.input}
                 required={true}
+                value={id}
+                onChange={e => setId(e.target.value)}
             />
             <input
                 type="text"
@@ -49,14 +45,11 @@ const Credentials = () => {
                 name="apiTokenInstance"
                 className={styles.input}
                 required={true}
+                value={token}
+                onChange={e => setToken(e.target.value)}
             />
-            <button
-                type="submit"
-                className={styles.button}
-            >
-                Start
-            </button>
-            {networkError && <div className={styles.error}>{networkError}</div>}
+            <button type="submit" className={styles.button}>Start</button>
+            {error && <div className={styles.error}>{error}</div>}
         </form>
     );
 };

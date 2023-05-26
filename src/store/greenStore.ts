@@ -2,10 +2,8 @@ import {makeObservable, observable, action} from "mobx";
 
 export interface IMessage {
     id : string,
-    data: {
-        text: string,
-        incoming: boolean
-    }
+    text: string,
+    incoming: boolean
 }
 
 export interface IGreenStore {
@@ -69,7 +67,6 @@ class GreenStore implements IGreenStore{
     clearMessages(): void {
         this.messages = []
     }
-
 }
 
 const storeInstance = new GreenStore();

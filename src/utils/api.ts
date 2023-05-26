@@ -9,145 +9,76 @@ export interface ICheckWhatsappData {
     phoneNumber: number
 }
 
-export type GetSettingsData = Partial<typeof info>;
-export type SendMessageData = Partial<typeof sendMessage>;
-export type ReceiveNotificationData = Partial<typeof notification>;
-export type ExistWhatsApp = {
+export interface ISaveSettingData {
+    saveSettings: boolean
+}
+
+export interface ISendMessage {
+    idMessage: string
+}
+
+export interface IExistWhatsApp {
     existsWhatsapp: boolean
-};
+}
+
+export interface IDeleteNotification {
+    result: boolean
+}
+
+export type GetSettingsData = typeof info;
+export type ReceiveNotificationData = typeof notification;
 
 export class Api {
     static getSettings = (id: string, token: string): Promise<AxiosResponse<GetSettingsData> | AxiosError> => {
         return axios.get(`https://api.green-api.com/waInstance${id}/getSettings/${token}/`);
-    }
+    };
 
-    static checkWhatsapp = (id: string, token: string, phone: number): Promise<AxiosResponse<ExistWhatsApp> | AxiosError> => {
+    static setSettings = (id: string, token: string, data: {[key: string]: string}): Promise<AxiosResponse<ISaveSettingData> | AxiosError> => {
+        return axios.post(`https://api.green-api.com/waInstance${id}/setSettings/${token}/`, data);
+    };
+
+    static checkWhatsapp = (id: string, token: string, phone: number): Promise<AxiosResponse<IExistWhatsApp> | AxiosError> => {
         const data: ICheckWhatsappData = {
             phoneNumber: phone
         };
         return axios.post(`https://api.green-api.com/waInstance${id}/checkWhatsapp/${token}`, data);
-    }
+    };
 
-    static sendMessage = (id: string, token: string, data: ISendData): Promise<AxiosResponse<SendMessageData> | AxiosError> => {
+    static sendMessage = (id: string, token: string, data: ISendData): Promise<AxiosResponse<ISendMessage> | AxiosError> => {
         return axios.post(`https://api.green-api.com/waInstance${id}/sendMessage/${token}/`, data);
-    }
+    };
 
     static receiveNotification = (id: string, token: string): Promise<AxiosResponse<ReceiveNotificationData> | AxiosError> => {
         return axios.get(`https://api.green-api.com/waInstance${id}/receiveNotification/${token}/`);
-    }
+    };
 
-    static deleteNotification = (id: string, token: string, receiptId: string | number) => {
+    static deleteNotification = (id: string, token: string, receiptId: string | number): Promise<AxiosResponse<IDeleteNotification> | AxiosError> => {
         return axios.delete(`https://api.green-api.com/waInstance${id}/deleteNotification/${token}/${receiptId}/`);
-    }
-
-    static setSettings = (id: string, token: string, data: string): Promise<AxiosResponse<any> | AxiosError> => {
-        return axios.post(`https://api.green-api.com/waInstance${id}/setSettings/${token}/`);
-    }
+    };
 }
-
 
 // PS: не обращать внимание на данные ниже. Исключительно для описания типов для скорости разработки тестового
 
 const info = {
-    "data": {
-        "wid": "79041471464@c.us",
-        "countryInstance": "",
-        "typeAccount": "",
-        "webhookUrl": "",
-        "webhookUrlToken": "",
-        "delaySendMessagesMilliseconds": 0,
-        "markIncomingMessagesReaded": "no",
-        "markIncomingMessagesReadedOnReply": "no",
-        "sharedSession": "no",
-        "proxyInstance": "system proxy",
-        "outgoingWebhook": "no",
-        "outgoingMessageWebhook": "no",
-        "outgoingAPIMessageWebhook": "no",
-        "incomingWebhook": "no",
-        "deviceWebhook": "no",
-        "statusInstanceWebhook": "no",
-        "stateWebhook": "no",
-        "enableMessagesHistory": "no",
-        "keepOnlineStatus": "no"
-    },
-    "status": 200,
-    "statusText": "OK",
-    "headers": {
-        "content-length": "494",
-        "content-type": "application/json; charset=utf-8"
-    },
-    "config": {
-        "transitional": {
-            "silentJSONParsing": true,
-            "forcedJSONParsing": true,
-            "clarifyTimeoutError": false
-        },
-        "adapter": [
-            "xhr",
-            "http"
-        ],
-        "transformRequest": [
-            null
-        ],
-        "transformResponse": [
-            null
-        ],
-        "timeout": 0,
-        "xsrfCookieName": "XSRF-TOKEN",
-        "xsrfHeaderName": "X-XSRF-TOKEN",
-        "maxContentLength": -1,
-        "maxBodyLength": -1,
-        "env": {},
-        "headers": {
-            "Accept": "application/json, text/plain, */*"
-        },
-        "method": "get",
-        "url": "https://api.green-api.com/waInstance1101824783/getSettings/1e9e5b2074ef4c55b215128d96fe93bdcbdcdd32da4a4e03a0/"
-    },
-    "request": {}
-}
-
-const sendMessage = {
-    "data": {
-        "idMessage": "BAE550AE7E95B4BC"
-    },
-    "status": 200,
-    "statusText": "OK",
-    "headers": {
-        "content-length": "32",
-        "content-type": "application/json; charset=utf-8"
-    },
-    "config": {
-        "transitional": {
-            "silentJSONParsing": true,
-            "forcedJSONParsing": true,
-            "clarifyTimeoutError": false
-        },
-        "adapter": [
-            "xhr",
-            "http"
-        ],
-        "transformRequest": [
-            null
-        ],
-        "transformResponse": [
-            null
-        ],
-        "timeout": 0,
-        "xsrfCookieName": "XSRF-TOKEN",
-        "xsrfHeaderName": "X-XSRF-TOKEN",
-        "maxContentLength": -1,
-        "maxBodyLength": -1,
-        "env": {},
-        "headers": {
-            "Accept": "application/json, text/plain, */*",
-            "Content-Type": "application/json"
-        },
-        "method": "post",
-        "url": "https://api.green-api.com/waInstance1101824783/sendMessage/1e9e5b2074ef4c55b215128d96fe93bdcbdcdd32da4a4e03a0",
-        "data": "{\"chatId\":\"79501205563@c.us\",\"message\":\"Привет, не обращай внимание, это тесты\"}"
-    },
-    "request": {}
+    "wid": "38268586571@c.us",
+    "countryInstance": "",
+    "typeAccount": "",
+    "webhookUrl": "",
+    "webhookUrlToken": "",
+    "delaySendMessagesMilliseconds": 0,
+    "markIncomingMessagesReaded": "no",
+    "markIncomingMessagesReadedOnReply": "no",
+    "sharedSession": "no",
+    "proxyInstance": "system proxy",
+    "outgoingWebhook": "no",
+    "outgoingMessageWebhook": "no",
+    "outgoingAPIMessageWebhook": "no",
+    "incomingWebhook": "yes",
+    "deviceWebhook": "no",
+    "statusInstanceWebhook": "no",
+    "stateWebhook": "no",
+    "enableMessagesHistory": "no",
+    "keepOnlineStatus": "no"
 }
 
 const notification = {

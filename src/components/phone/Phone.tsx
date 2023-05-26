@@ -1,13 +1,13 @@
 import React, {ChangeEvent, FC, useState} from 'react';
 import styles from "./Phone.module.css";
 import greenStore from "../../store/greenStore";
-import {Api, ExistWhatsApp} from "../../utils/api";
+import {Api, IExistWhatsApp} from "../../utils/api";
 import {AxiosResponse} from "axios";
 
-const Phone: FC<{}> = () => {
+const Phone: FC = () => {
     const {greenId, greenToken} = greenStore;
-    const [inputPhone, setInputPhone] = useState("");
-    const [error, setError] = useState("");
+    const [inputPhone, setInputPhone] = useState<string>("");
+    const [error, setError] = useState<string>("");
 
     const onStart = async () => {
         if (!inputPhone || !greenId || !greenToken) {
@@ -17,7 +17,7 @@ const Phone: FC<{}> = () => {
         greenStore.clearMessages();
 
         try {
-            const response = await Api.checkWhatsapp(greenId, greenToken, +inputPhone) as AxiosResponse<ExistWhatsApp>;
+            const response = await Api.checkWhatsapp(greenId, greenToken, +inputPhone) as AxiosResponse<IExistWhatsApp>;
             if (response.data.existsWhatsapp) {
                 greenStore.setPhone(+inputPhone);
             } else {

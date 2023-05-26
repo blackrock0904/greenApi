@@ -11,22 +11,22 @@ import Phone from "./components/phone/Phone";
 function App() {
     const {isEligible} = greenStore;
 
-  return (
-      <Portal>
-          {!isEligible && <Credentials/>}
-          {isEligible && (
-              <>
-                  <div className={styles.phoneBox}>
-                      <Phone/>
-                  </div>
-                  <div className={styles.logoutBox}>
-                      <Logout/>
-                  </div>
-                  <Chat/>
-              </>
-          )}
-      </Portal>
-  );
+    return (
+        <Portal>
+            {isEligible && (
+                <>
+                    <div className={styles.phoneBox}>
+                        <Phone/>
+                    </div>
+                    <div className={styles.logoutBox}>
+                        <Logout/>
+                    </div>
+                    <Chat/>
+                </>
+            )}
+            {!isEligible && <Credentials/>}
+        </Portal>
+    );
 }
 
 export default observer(App);

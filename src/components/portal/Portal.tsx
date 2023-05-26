@@ -1,9 +1,9 @@
-import React, {FC} from 'react';
+import React, {FC, ReactNode} from 'react';
 import styles from './Portal.module.css';
 
 interface Props {
-    children?: React.ReactNode
-};
+    children?: ReactNode
+}
 
 const Portal: FC<Props> = ({children}): JSX.Element => {
     return (
