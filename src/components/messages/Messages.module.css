@@ -1,0 +1,52 @@
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.container > * > * {
+    margin-bottom: 5px;
+    border-radius: 5px;
+}
+
+.incoming div {
+    background: white;
+    display: inline-block;
+    padding: 10px;
+    position: relative;
+    color: black;
+}
+
+.incoming div:after {
+    display: block;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -10px;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(45deg, transparent 0%, transparent 50%, white 51%, white 100%);
+}
+
+.outgoing {
+    text-align: right;
+}
+
+.outgoing div {
+    background: seagreen;
+    display: inline-block;
+    padding: 10px;
+    margin-left: auto;
+    position: relative;
+    color: white;
+}
+
+.outgoing div:after {
+    display: block;
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -10px;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(315deg, transparent 0%, transparent 50%, seagreen 51%, seagreen 100%);
+}

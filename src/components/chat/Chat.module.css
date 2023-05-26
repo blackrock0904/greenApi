@@ -16,6 +16,7 @@
 .header {
     width: 100%;
     background: gray;
+    color: white;
 }
 
 .body {
@@ -25,33 +26,4 @@
 .footer {
     width: 100%;
     background: gray;
-}
-
-.header,
-.footer {
-    max-width: 360px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.input,
-.button {
-    padding: 5px;
-    border: none;
-    border-radius: 5px;
-}
-
-.input {
-    flex-grow: 1;
-}
-
-.button {
-    padding: 5px 10px;
-    margin-left: 20px;
-    cursor: pointer;
-}
-
-.input:focus,
-.input:focus-visible {
-    outline: none ;
 }

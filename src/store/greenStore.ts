@@ -1,13 +1,11 @@
 import {makeObservable, observable, action} from "mobx";
 
-export enum MessagesType {
-    in = "in",
-    out = "out"
-}
-
 export interface IMessage {
-    text: string,
-    type: MessagesType,
+    id : string,
+    data: {
+        text: string,
+        incoming: boolean
+    }
 }
 
 export interface IGreenStore {
@@ -19,6 +17,8 @@ export interface IGreenStore {
     logout: () => void;
     setEligible: (v: boolean) => void;
     setPhone: (v: number) => void;
+    addMessage: (message: IMessage) => void;
+    clearMessages: () => void;
 }
 
 class GreenStore implements IGreenStore{
@@ -36,6 +36,8 @@ class GreenStore implements IGreenStore{
             logout: action,
             setEligible: action,
             setPhone: action,
+            addMessage: action,
+            clearMessages: action,
         });
         this.isEligible = false;
         this.greenId = "";
@@ -48,6 +50,8 @@ class GreenStore implements IGreenStore{
         this.isEligible = false;
         this.greenId = "";
         this.greenToken = "";
+        this.phone = null;
+        this.messages = [];
     }
 
     setEligible(v: boolean) {
@@ -57,6 +61,15 @@ class GreenStore implements IGreenStore{
     setPhone(v: number | null): void {
         this.phone = v;
     }
+
+    addMessage(message: IMessage): void {
+        this.messages.push(message);
+    }
+
+    clearMessages(): void {
+        this.messages = []
+    }
+
 }
 
 const storeInstance = new GreenStore();

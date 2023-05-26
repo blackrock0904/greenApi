@@ -1,0 +1,32 @@
+.container {
+    max-width: 360px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.input,
+.button {
+    padding: 10px;
+    border-radius: 3px;
+    border: none;
+}
+
+.button {
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.input {
+    flex-grow: 1;
+}
+
+input:focus,
+input:focus-visible {
+    outline: none;
+}
+
+.error {
+    color: red;
+    margin-bottom: 10px;
+}

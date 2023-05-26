@@ -29,15 +29,19 @@ export class Api {
     }
 
     static sendMessage = (id: string, token: string, data: ISendData): Promise<AxiosResponse<SendMessageData> | AxiosError> => {
-        return axios.post(`https://api.green-api.com/waInstance${id}/sendMessage/${token}/`, data)
+        return axios.post(`https://api.green-api.com/waInstance${id}/sendMessage/${token}/`, data);
     }
 
     static receiveNotification = (id: string, token: string): Promise<AxiosResponse<ReceiveNotificationData> | AxiosError> => {
-        return axios.get(`https://api.green-api.com/waInstance${id}/receiveNotification/${token}/`)
+        return axios.get(`https://api.green-api.com/waInstance${id}/receiveNotification/${token}/`);
     }
 
-    static DeleteNotification = (id: string, token: string, receiptId: string) => {
-        return axios.delete(`https://api.green-api.com/waInstance${id}/deleteNotification/${token}/${receiptId}/`)
+    static deleteNotification = (id: string, token: string, receiptId: string | number) => {
+        return axios.delete(`https://api.green-api.com/waInstance${id}/deleteNotification/${token}/${receiptId}/`);
+    }
+
+    static setSettings = (id: string, token: string, data: string): Promise<AxiosResponse<any> | AxiosError> => {
+        return axios.post(`https://api.green-api.com/waInstance${id}/setSettings/${token}/`);
     }
 }
 
@@ -147,40 +151,27 @@ const sendMessage = {
 }
 
 const notification = {
-    "data": null,
-    "status": 200,
-    "statusText": "OK",
-    "headers": {
-        "content-length": "4",
-        "content-type": "application/json; charset=utf-8"
-    },
-    "config": {
-        "transitional": {
-            "silentJSONParsing": true,
-            "forcedJSONParsing": true,
-            "clarifyTimeoutError": false
+    "receiptId": 1,
+    "body": {
+        "typeWebhook": "incomingMessageReceived",
+        "instanceData": {
+            "idInstance": 1101825047,
+            "wid": "38268586571@c.us",
+            "typeInstance": "whatsapp"
         },
-        "adapter": [
-            "xhr",
-            "http"
-        ],
-        "transformRequest": [
-            null
-        ],
-        "transformResponse": [
-            null
-        ],
-        "timeout": 0,
-        "xsrfCookieName": "XSRF-TOKEN",
-        "xsrfHeaderName": "X-XSRF-TOKEN",
-        "maxContentLength": -1,
-        "maxBodyLength": -1,
-        "env": {},
-        "headers": {
-            "Accept": "application/json, text/plain, */*"
+        "timestamp": 1685117351,
+        "idMessage": "ABD7D6D07B06C50C39F254E731F94CC3",
+        "senderData": {
+            "chatId": "79041471464@c.us",
+            "chatName": "Макс",
+            "sender": "79041471464@c.us",
+            "senderName": "Макс"
         },
-        "method": "get",
-        "url": "https://api.green-api.com/waInstance1101824783/receiveNotification/1e9e5b2074ef4c55b215128d96fe93bdcbdcdd32da4a4e03a0/"
-    },
-    "request": {}
+        "messageData": {
+            "typeMessage": "textMessage",
+            "textMessageData": {
+                "textMessage": "Еееааа"
+            }
+        }
+    }
 }

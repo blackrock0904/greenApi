@@ -8,7 +8,7 @@ const Logout: FC<{}> = () => {
             className={styles.logout}
             onClick={() => greenStore.logout()}
         >
-            Logout
+            Exit
         </button>
     );
 };

@@ -14,6 +14,7 @@ const Phone: FC<{}> = () => {
             return;
         }
         setError("");
+        greenStore.clearMessages();
 
         try {
             const response = await Api.checkWhatsapp(greenId, greenToken, +inputPhone) as AxiosResponse<ExistWhatsApp>;
